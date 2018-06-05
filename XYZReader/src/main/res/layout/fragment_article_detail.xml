@@ -29,24 +29,23 @@
                 tools:src="@drawable/eclairs"
                 android:scaleType="centerCrop"/>
 
+       <android.support.v7.widget.Toolbar
+           android:id="@+id/toolbar"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:minHeight="?attr/actionBarSize"
+           app:layout_scrollFlags="scroll|enterAlways|snap"
+           app:popupTheme="@style/CustomActionBar"
+           />
+
    </android.support.design.widget.CollapsingToolbarLayout>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/CustomActionBar"
-            />
-
-                <LinearLayout
+        <LinearLayout
                     android:id="@+id/linear_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="6dp"
                     android:paddingBottom="4dp"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     android:orientation="vertical">
 
                     <TextView
@@ -86,16 +85,37 @@
             android:layout_margin="8dp"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/article_body"
+            <com.ms.square.android.expandabletextview.ExpandableTextView
+                android:id="@+id/expandableView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:padding="4dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                tools:text="hsjhkdjshsajhcksjdhvfkjhskj shfjdhgjshjg djdsvjs cghdgchdsgchd skjksjdkjskdj sdjsh"
-                android:ellipsize="end"
-                android:lineSpacingExtra="4dp"/>
+                app:animDuration="200"
+                app:maxCollapsedLines="10">
+
+                <TextView
+                    android:id="@+id/expandable_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-light"
+                    android:lineSpacingExtra="4dp"
+                    android:padding="4dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/colorPrimary"
+                    tools:text="hsjhkdjshsajhcksjdhvfkjhskj shfjdhgjshjg djdsvjs cghdgchdsgchd skjksjdkjskdj sdjsh"/>
+
+                <ImageButton
+                    android:id="@+id/expand_collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:padding="6dp"
+                    app:srcCompat="@drawable/ic_arrow_drop_down"/>
+
+            </com.ms.square.android.expandabletextview.ExpandableTextView>
+
 
         </LinearLayout>
 
