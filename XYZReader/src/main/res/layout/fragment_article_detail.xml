@@ -19,7 +19,7 @@
        android:fitsSystemWindows="true"
        app:expandedTitleMarginEnd="64dp"
        app:expandedTitleMarginStart="48dp"
-       app:layout_scrollFlags="scroll|snap">
+       app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/photo"
@@ -31,20 +31,13 @@
 
    </android.support.design.widget.CollapsingToolbarLayout>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/app_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlways|snap"/>
-
                 <LinearLayout
                     android:id="@+id/linear_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="6dp"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    android:paddingBottom="4dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     android:orientation="vertical">
 
                     <TextView
@@ -92,7 +85,8 @@
                 android:padding="4dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 tools:text="hsjhkdjshsajhcksjdhvfkjhskj shfjdhgjshjg djdsvjs cghdgchdsgchd skjksjdkjskdj sdjsh"
-                android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier" />
+                android:ellipsize="end"
+                android:lineSpacingExtra="4dp"/>
 
         </LinearLayout>
 

@@ -11,9 +11,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
@@ -116,9 +114,6 @@ public class ArticleDetailFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
-
-        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.app_toolbar);
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
 
         /**
         mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
