@@ -31,6 +31,15 @@
 
    </android.support.design.widget.CollapsingToolbarLayout>
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/CustomActionBar"
+            />
+
                 <LinearLayout
                     android:id="@+id/linear_header"
                     android:layout_width="match_parent"
