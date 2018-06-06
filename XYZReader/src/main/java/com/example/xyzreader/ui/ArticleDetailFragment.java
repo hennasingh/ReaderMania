@@ -6,14 +6,13 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -23,11 +22,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -110,13 +109,8 @@ public class ArticleDetailFragment extends Fragment implements
             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
-        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
-        ((ActionBarActivity) getActivity()).setSupportActionBar(toolbar);
-
 
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
-
-        mExpandableTextView = (ExpandableTextView) mRootView.findViewById(R.id.expandableView);
 
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,10 +146,10 @@ public class ArticleDetailFragment extends Fragment implements
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
-        //TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
+        TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
 
-        //bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
+        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -181,33 +175,31 @@ public class ArticleDetailFragment extends Fragment implements
                                 + "</font>"));
 
             }
-            Spanned text = Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />"));
-            mExpandableTextView.setText(text);
-            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
-                        @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            Bitmap bitmap = imageContainer.getBitmap();
-                            if (bitmap != null) {
-                                Palette p = Palette.generate(bitmap, 12);
-                                mMutedColor = p.getDarkMutedColor(0xFF333333);
-                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                mRootView.findViewById(R.id.linear_header)
-                                        .setBackgroundColor(mMutedColor);
-                            }
-                        }
+            // Spanned text = Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />"));
+            bodyView.setText(mCursor.getString(ArticleLoader.Query.BODY));
+            Picasso.with(getActivity()).load(mCursor.getString(ArticleLoader.Query.PHOTO_URL)).into(mPhotoView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    Bitmap bitmap = ((BitmapDrawable) mPhotoView.getDrawable()).getBitmap();
+                    if (bitmap != null) {
+                        Palette p = Palette.generate(bitmap, 12);
+                        mMutedColor = p.getDarkMutedColor(0xFF333333);
+                        mRootView.findViewById(R.id.linear_header)
+                                .setBackgroundColor(mMutedColor);
+                    }
+                }
 
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
+                @Override
+                public void onError() {
 
-                        }
-                    });
+                }
+            });
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
             bylineView.setText("N/A" );
-            //bodyView.setText("N/A");
-            mExpandableTextView.setText("N/A");
+            bodyView.setText("N/A");
+
         }
     }
 
